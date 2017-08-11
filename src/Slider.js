@@ -167,6 +167,12 @@ export default class Slider extends PureComponent {
      * Used to configure the animation parameters.  These are the same parameters in the Animated library.
      */
     animationConfig : PropTypes.object,
+
+    /**
+     * Render custom content for thumb
+     */
+
+    renderThumbContent : PropTypes.func,
   };
 
   static defaultProps = {
@@ -275,7 +281,7 @@ export default class Slider extends PureComponent {
             }
           ]}
         >
-          {this._renderThumbImage()}
+          {this._renderThumbContent()}
         </Animated.View>
         <View
           renderToHardwareTextureAndroid={true}
@@ -507,6 +513,14 @@ export default class Slider extends PureComponent {
 
     return <Image source={thumbImage} />;
   };
+
+  _renderThumbContent = () => {
+    if(this.props.renderThumbContent) {
+      return this.props.renderThumbContent()
+    }
+
+   return this._renderThumbImage()
+  }
 }
 
 var defaultStyles = StyleSheet.create({
